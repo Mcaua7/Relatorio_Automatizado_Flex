@@ -25,7 +25,7 @@ export const RelatorioStyle = styled.div`
 
     @media (max-width: 600px) {
         grid-template-rows: 1fr 4fr;
-        width: 80%;
+        width: 90%;
 
         div {
             align-items: center;
@@ -54,9 +54,18 @@ export const ResultRelatorio = styled.section`
         text-align: center;
         border-bottom: 1px solid;
     }
+    th{
+        text-align: center;
+        padding: 10px;
+        border: 1px solid;
+        border-color: #999f985f;
+    }
+
     td {
         text-align: center;
         padding: 10px;
+        border: 1px solid;
+        border-color: #999f985f;
     }
 `;
 

@@ -73,7 +73,6 @@ function ClipBoardRelatorio() {
                                 </tr>
                             ) : (
                                 alunos?.map((e) => {
-                                    console.log(e)
                                     return (
                                         <tr key={e.id}>
                                             <td>{formatarData(e.data)}</td>

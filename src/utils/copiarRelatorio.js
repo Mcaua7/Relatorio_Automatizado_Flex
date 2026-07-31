@@ -1,13 +1,13 @@
 import { formatarData } from "./formartarData";
 export async function copiar (alunos){
-        let texto = 'Relatorio Flex\n\n'
+        let texto = '*Relatório Flex*\n\n'
 
         for(let e of alunos){
             texto += `Nome: ${e.nome}
 Data: ${formatarData(e.data)} 
-Modulo: ${e.modulo}
+Módulo: ${e.modulo}
 Aula: ${e.aula} 
-Horario: ${e.horario}   
+Horário: ${e.horario}   
 Status: ${e.status}
 
 `
