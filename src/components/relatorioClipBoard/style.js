@@ -54,7 +54,7 @@ export const ResultRelatorio = styled.section`
         text-align: center;
         border-bottom: 1px solid;
     }
-    th{
+    th {
         text-align: center;
         padding: 10px;
         border: 1px solid;
@@ -112,4 +112,15 @@ export const BtnDiv = styled.div`
         justify-self: flex-end;
         height: 20px;
     }
+`;
+
+export const Status = styled.span`
+    padding: 7px;
+    border-radius: 20px;
+    background-color: ${({ $status }) => {
+        return $status === "Aluno compareceu" ? "green" : "red";
+    }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;

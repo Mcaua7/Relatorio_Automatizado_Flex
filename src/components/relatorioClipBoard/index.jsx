@@ -3,7 +3,7 @@ import axios from "axios";
 import { formatarData } from "../../utils/formartarData";
 import { copiar } from "../../utils/copiarRelatorio";
 import { relatorio, marcarPresencas } from "../../api/relatorioAxios";
-import { RelatorioStyle, ResultRelatorio, BtnDiv } from "./style";
+import { RelatorioStyle, ResultRelatorio, BtnDiv, Status } from "./style";
 import { FaRegCopy } from "react-icons/fa";
 import { IoCheckboxOutline } from "react-icons/io5";
 
@@ -81,9 +81,9 @@ function ClipBoardRelatorio() {
                                             <td>{e.aula}</td>
                                             <td>{e.horario}</td>
                                             <td>
-                                                {e.status == "Aluno compareceu"
-                                                    ? "Presente"
-                                                    : "Ausente"}
+                                                <Status $status={e.status}>
+                                                    {e.status === "Aluno compareceu" ? 'Presente' : 'Ausente'}
+                                                </Status>
                                             </td>
                                         </tr>
                                     );
