@@ -23,10 +23,13 @@ function ClipBoardRelatorio() {
         }
     }
     async function presenca() {
+        setLoading(true);
         try {
             const dados = await marcarPresencas();
         } catch (error) {
             console.error(error);
+        }finally {
+            setLoading(false);
         }
     }
 
@@ -43,7 +46,7 @@ function ClipBoardRelatorio() {
                     <BtnDiv>
                         <button
                             onClick={presenca}
-                            disabled={!alunos?.length > 0}
+                            disabled={loading}
                             title="Atualizar relatorio"
                             aria-label="Atualizar relatorio"
                         >
