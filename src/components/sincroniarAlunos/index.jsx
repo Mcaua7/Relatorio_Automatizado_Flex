@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { sincronizarAlunos } from "../../api/relatorioAxios";
 import { pegarDataAtual } from "../../utils/dataDeHoje";
-import { SyncStyle, AlunosDoDiaStyle, BtnDiv } from "./style";
+import {
+    SyncStyle,
+    AlunosDoDiaStyle,
+    BtnDiv,
+    Loader,
+    LoaderCell,
+} from "./style";
 import { FiRefreshCw } from "react-icons/fi";
 import { formatarData } from "../../utils/formartarData";
+import { GiLookAt } from "react-icons/gi";
 
 function SincronizarAlunos() {
     const dataAtual = pegarDataAtual();
@@ -60,26 +67,38 @@ function SincronizarAlunos() {
                             <th>Horário</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {!alunosDeHoje ||
-                        alunosDeHoje?.length === 0 ||
-                        alunosDeHoje?.includes("Nenhum aluno marcado") ? (
+                    {!loading ? (
+                        <tbody>
+                            {!alunosDeHoje ||
+                            alunosDeHoje?.length === 0 ||
+                            alunosDeHoje?.includes("Nenhum aluno marcado") ? (
+                                <tr>
+                                    <td colSpan={6}>Sem aula marcada</td>
+                                </tr>
+                            ) : (
+                                alunosDeHoje?.map((e) => {
+                                    return (
+                                        <tr key={e.id}>
+                                            <td>{e.nome}</td>
+                                            <td>{e.modulo}</td>
+                                            <td>{e.aula}</td>
+                                            <td>{e.horario}</td>
+                                        </tr>
+                                    );
+                                })
+                            )}
+                        </tbody>
+                    ) : (
+                        <tbody>
                             <tr>
-                                <td colSpan={6}>Sem aula marcada</td>
+                                <td colSpan={4}>
+                                    <LoaderCell>
+                                        <Loader></Loader>
+                                    </LoaderCell>
+                                </td>
                             </tr>
-                        ) : (
-                            alunosDeHoje?.map((e) => {
-                                return (
-                                    <tr key={e.id}>
-                                        <td>{e.nome}</td>
-                                        <td>{e.modulo}</td>
-                                        <td>{e.aula}</td>
-                                        <td>{e.horario}</td>
-                                    </tr>
-                                );
-                            })
-                        )}
-                    </tbody>
+                        </tbody>
+                    )}
                 </table>
             </AlunosDoDiaStyle>
         </SyncStyle>

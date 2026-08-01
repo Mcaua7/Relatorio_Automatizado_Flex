@@ -3,27 +3,37 @@ import axios from "axios";
 import { formatarData } from "../../utils/formartarData";
 import { copiar } from "../../utils/copiarRelatorio";
 import { relatorio, marcarPresencas } from "../../api/relatorioAxios";
-import { RelatorioStyle, ResultRelatorio, BtnDiv, Status } from "./style";
+import { RelatorioStyle, ResultRelatorio, BtnDiv, Status, Loader, LoaderCell } from "./style";
 import { FaRegCopy } from "react-icons/fa";
 import { IoCheckboxOutline } from "react-icons/io5";
 
 function ClipBoardRelatorio() {
     const [alunos, setAlunos] = useState([]);
-    const [marcarPresenca, setMarcarPresenca] = useState(false);
+    const [loading, setLoading] = useState(false);
 
+    async function carregar() {
+        setLoading(true);
+        try {
+            const dados = await relatorio();
+            setAlunos(dados.data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
     async function presenca() {
-        const dados = await marcarPresencas();
-        setMarcarPresenca(!marcarPresenca);
+        try {
+            const dados = await marcarPresencas();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     useEffect(() => {
-        async function carregar() {
-            const dados = await relatorio();
-            setAlunos(dados.data);
-        }
-
         carregar();
-    }, [marcarPresenca]);
+        presenca();
+    }, []);
 
     return (
         <>
@@ -65,31 +75,46 @@ function ClipBoardRelatorio() {
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {alunos?.length === 0 ||
-                            alunos?.includes("Nenhum aluno marcado") ? (
+                        {!loading ? (
+                            <tbody>
+                                {alunos?.length === 0 ||
+                                alunos?.includes("Nenhum aluno marcado") ? (
+                                    <tr>
+                                        <td colSpan={6}>Sem aula marcada</td>
+                                    </tr>
+                                ) : (
+                                    alunos?.map((e) => {
+                                        return (
+                                            <tr key={e.id}>
+                                                <td>{formatarData(e.data)}</td>
+                                                <td>{e.nome}</td>
+                                                <td>{e.modulo}</td>
+                                                <td>{e.aula}</td>
+                                                <td>{e.horario}</td>
+                                                <td>
+                                                    <Status $status={e.status}>
+                                                        {e.status ===
+                                                        "Aluno compareceu"
+                                                            ? "Presente"
+                                                            : "Ausente"}
+                                                    </Status>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                )}
+                            </tbody>
+                        ) : (
+                            <tbody>
                                 <tr>
-                                    <td colSpan={6}>Sem aula marcada</td>
+                                    <td colSpan={6}>
+                                        <LoaderCell>
+                                            <Loader></Loader>
+                                        </LoaderCell>
+                                    </td>
                                 </tr>
-                            ) : (
-                                alunos?.map((e) => {
-                                    return (
-                                        <tr key={e.id}>
-                                            <td>{formatarData(e.data)}</td>
-                                            <td>{e.nome}</td>
-                                            <td>{e.modulo}</td>
-                                            <td>{e.aula}</td>
-                                            <td>{e.horario}</td>
-                                            <td>
-                                                <Status $status={e.status}>
-                                                    {e.status === "Aluno compareceu" ? 'Presente' : 'Ausente'}
-                                                </Status>
-                                            </td>
-                                        </tr>
-                                    );
-                                })
-                            )}
-                        </tbody>
+                            </tbody>
+                        )}
                     </table>
                 </ResultRelatorio>
             </RelatorioStyle>
