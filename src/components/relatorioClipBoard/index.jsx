@@ -33,6 +33,16 @@ function ClipBoardRelatorio() {
         }
     }
 
+    async function reloadPresenca() {
+        try{
+            await presenca()
+        }catch (error){
+            console.error(error)
+        }finally{
+            window.location.reload()
+        }
+    }
+
     useEffect(() => {
         carregar();
         presenca();
@@ -45,7 +55,7 @@ function ClipBoardRelatorio() {
                     <h2>Relatorio:</h2>
                     <BtnDiv>
                         <button
-                            onClick={presenca}
+                            onClick={reloadPresenca}
                             disabled={loading}
                             title="Atualizar relatorio"
                             aria-label="Atualizar relatorio"
