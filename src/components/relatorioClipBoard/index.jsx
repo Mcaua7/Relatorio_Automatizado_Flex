@@ -3,7 +3,14 @@ import axios from "axios";
 import { formatarData } from "../../utils/formartarData";
 import { copiar } from "../../utils/copiarRelatorio";
 import { relatorio, marcarPresencas } from "../../api/relatorioAxios";
-import { RelatorioStyle, ResultRelatorio, BtnDiv, Status, Loader, LoaderCell } from "./style";
+import {
+    RelatorioStyle,
+    ResultRelatorio,
+    BtnDiv,
+    Status,
+    Loader,
+    LoaderCell,
+} from "./style";
 import { FaRegCopy } from "react-icons/fa";
 import { IoCheckboxOutline } from "react-icons/io5";
 
@@ -28,18 +35,18 @@ function ClipBoardRelatorio() {
             const dados = await marcarPresencas();
         } catch (error) {
             console.error(error);
-        }finally {
+        } finally {
             setLoading(false);
         }
     }
 
     async function reloadPresenca() {
-        try{
-            await presenca()
-        }catch (error){
-            console.error(error)
-        }finally{
-            window.location.reload()
+        try {
+            await presenca();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            window.location.reload();
         }
     }
 
@@ -90,8 +97,8 @@ function ClipBoardRelatorio() {
                         </thead>
                         {!loading ? (
                             <tbody>
-                                {alunos?.length === 0 ||
-                                alunos?.includes("Nenhum aluno marcado") ? (
+                                {alunos.length === 0 ||
+                                alunos.includes("Nenhuma aula aplicada!") ? (
                                     <tr>
                                         <td colSpan={6}>Sem aula marcada</td>
                                     </tr>
