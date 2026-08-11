@@ -63,7 +63,7 @@ function ClipBoardRelatorio() {
                     <BtnDiv>
                         <button
                             onClick={reloadPresenca}
-                            disabled={loading}
+                            disabled={loading || alunos.includes("Nenhuma aula aplicada!") || alunos.length === 0}
                             title="Atualizar relatorio"
                             aria-label="Atualizar relatorio"
                         >
@@ -74,7 +74,7 @@ function ClipBoardRelatorio() {
                             onClick={() => {
                                 copiar(alunos);
                             }}
-                            disabled={!alunos?.length > 0}
+                            disabled={loading || alunos.includes("Nenhuma aula aplicada!") || alunos.length === 0}
                             aria-label="Copiar relatorio"
                             title="Copiar relatorio"
                         >
