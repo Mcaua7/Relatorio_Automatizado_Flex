@@ -113,7 +113,7 @@ Durante o desenvolvimento deste projeto, foram praticados conceitos como:
 
 ---
 
-## 👨‍💻 Autor
+## Autor
 
 **Matheus Cauã**
 
